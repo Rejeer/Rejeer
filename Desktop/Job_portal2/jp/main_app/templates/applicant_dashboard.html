@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+    <title>Applicant Dashboard</title>
+    <style>
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax values as needed */
+            gap: 1rem; /* Space between cards */
+        }
+        
+        .card {
+            /* Optionally, you can set a max-width to ensure cards don't stretch too much */
+            max-width: 100%;
+        }
+        
+    </style>        
+    <h2>Welcome Applicant!</h2>
+    <p>This is the applicant dashboard.</p>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav ms-auto">
+                {% if request.user.has_applicant_profile %}
+                    <!-- If the user has an applicant profile, show the View Profile button -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'applicant__profile_view' %}">View Profile</a>
+                    </li>
+                {% else %}
+                    <!-- If the user does not have an applicant profile, show the Create Profile button -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_appli_profile' %}">Create Profile</a>
+                    </li>
+                {% endif %}
+                <!-- Common Back button or other links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'applicant_dashboard' %}">Back</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    <div class="card-container">
+        {% if job_posts %}
+            {% for job in job_posts %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ job.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ job.company.name }}</h6>
+                    <p class="card-text">{{ job.location }}</p>
+                    <p class="card-text">{{ job.salary }}LPA</p>
+                    <p class="card-text">Posted at: {{ job.posted_at }}</p>
+                    <a href="{% url 'applicant_update_application_status' job.id %}" class="card-link">Apply</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No job posts available.</p>
+        {% endif %}
+    </div>
+    
+
+    {% endblock content %}

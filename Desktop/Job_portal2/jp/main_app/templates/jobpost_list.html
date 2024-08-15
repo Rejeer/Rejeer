@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<p>successfully add your job </p>
+{% if job_posts %}
+    {% for job in job_posts %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ job.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ job.company }}</h6>
+            <p class="card-text">{{ job.location }}</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No job posts available.</p>
+{% endif %}
+{% endblock content %}

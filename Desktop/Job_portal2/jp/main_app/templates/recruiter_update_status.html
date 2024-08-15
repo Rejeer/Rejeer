@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Update Application Status</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="status">Update Status:</label>
+        <select name="status" id="status">
+            <option value="applied" {% if application.status == 'applied' %}selected{% endif %}>Applied</option>
+            <option value="reviewed" {% if application.status == 'reviewed' %}selected{% endif %}>Reviewed</option>
+            <option value="interviewing" {% if application.status == 'interviewing' %}selected{% endif %}>Interviewing</option>
+            <option value="rejected" {% if application.status == 'rejected' %}selected{% endif %}>Rejected</option>
+            <option value="accepted" {% if application.status == 'accepted' %}selected{% endif %}>Accepted</option>
+        </select>
+        <button type="submit">Update Status</button>
+    </form>
+{% endblock content %}

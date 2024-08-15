@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .profile-container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-container h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .profile-container p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .profile-container strong {
+        color: #222;
+    }
+
+    .resume-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>
+<div class="profile-container">
+    <h1>Company Profile</h1>
+    {% if company %}
+        <p><strong>Company Name:</strong> {{ company.name }}</p>
+        <p><strong>Establishment Year:</strong> {{ company.est_year }}</p>
+        <p><strong>City:</strong> {{ company.city }}</p>
+        <p><strong>State:</strong> {{ company.state }}</p>
+    {% else %}
+        <p>No company profile created yet.</p>
+    {% endif %}
+</div>
+{% endblock content %}

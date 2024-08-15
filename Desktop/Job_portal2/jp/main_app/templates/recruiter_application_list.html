@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <h1>Applications for {{ job.title }}</h1>
+    {% if applications %}
+        <ul>
+            {% for application in applications %}
+                <li>
+                    <strong>Applicant:</strong> {{ application.seeker.first_name }} {{ application.seeker.last_name }} <br>
+                    <strong>Status:</strong> {{ application.get_status_display }} <br>
+                    <a href="{{ application.resume.url }}">View Resume</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No applications found.</p>
+    {% endif %}
+
+
+{% endblock content %}

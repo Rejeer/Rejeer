@@ -1,0 +1,22 @@
+<style>
+    h1{
+        text-align: center;
+        color: grey;
+        text-underline-position: below;
+    }
+    ul{
+        text-align: center;
+
+    }
+</style>
+<h2>Notifications for {{ company.name }}</h2>
+<ul>
+    {% for notification in notifications %}
+        <li>{{ notification.message }} - {{ notification.created_at }}</li>
+    {% endfor %}
+</ul>
+
+    <!-- Link to go back to the company dashboard -->
+    <a href="{% url 'company_dashboard' %}">Back to Dashboard</a>
+
+

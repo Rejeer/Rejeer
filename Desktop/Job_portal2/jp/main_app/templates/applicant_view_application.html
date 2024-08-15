@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    p{
+        text-align: center;
+        text-decoration: dotted;
+        color: red;
+        background-color: black;
+    }
+    h1{
+        text-align: center;
+        color: darkgray;
+    }
+    h3{
+        margin-top: 30px;
+        text-align: center;
+       
+    }
+    h4{
+        margin-top: 20px;
+        text-align: center;
+        
+    }
+    h6{
+        margin-top: 60px;
+        text-align: center;
+    }
+    </style>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicant_update_application_status' job.id %}">Back</a>
+    </li>
+    <h2>Apply for {{ job.title }}</h2>
+
+    {% if applied %}
+        <p>Your application for {{ job.title }} has been submitted successfully.</p>
+        <a href="{% url 'application_detail' application_id=applied.id %}">View Application</a>
+    {% else %}
+        {% if message %}
+            <p>{{ message }}</p>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Apply Now</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

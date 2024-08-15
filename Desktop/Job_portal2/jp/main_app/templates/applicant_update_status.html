@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f5ff; /* Light blue background */
+      }
+      
+      .job-listing {
+        border: 1px solid #c0c0ff; /* Lighter blue border */
+        padding: 30px;
+        background-color: #fff; /* White background for contrast */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #c0c0ff; /* Light blue border */
+        padding-bottom: 20px;
+      }
+      
+      .company-info {
+        display: flex;
+        align-items: center;
+      }
+      
+      .company-details {
+        margin-left: 10px;
+        color: #333; /* Darker text for better contrast */
+      }
+      
+      .job-details {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #666; /* Lighter text for details */
+      }
+      
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .actions button {
+        background-color: #007bff; /* Blue button background */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      
+      .job-body {
+        margin-top: 30px;
+      }
+      
+      .job-highlights, .job-match-score {
+        margin-bottom: 20px;
+        border-left: 5px solid #007bff; /* Blue border for sections */
+        padding-left: 10px;
+      }
+      
+      .job-highlights h3, .job-match-score h3 {
+        color: #007bff; /* Blue heading color */
+      }
+      .job-description {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .job-description h2 {
+        margin-top: 0;
+    }
+
+    .job-description p {
+        margin-bottom: 10px;
+    }
+
+      
+    </style>      
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicant_dashboard' %}">Back</a>
+    </li>
+<div class="job-listing">
+    <div class="job-header">
+      <h2 >{{job_ad.title}} - {{job_ad.company}} - {{job_ad.location}} </h2>
+      
+      
+      
+      <div class="actions">
+        <button>Send me jobs like this</button>
+        <button>Save</button>
+        {% if has_applied %}
+        <p>You have already applied for this job.</p>
+    {% else %}
+        <form method="post" action="{% url 'apply_for_job' job_ad.id %}">
+            {% csrf_token %}
+            <button type="submit">Apply</button>
+      </form>
+      {% endif %}
+      </div>
+    </div>
+    <div class="job-body">
+      <div class="job-highlights">
+        <h3>Job highlights</h3>
+        <ul>
+          <li>╰┈➤.{{job_ad.description }}</li>
+          <li>📍 {{job_ad.location}}</li>
+          <li>💼 {{job_ad.employment_type}}</li>
+          <li>💸 {{job_ad.salary}}LPA</li>
+        </ul>
+      </div>
+     
+    </div>
+</div>
+</div>
+    <div class="job-description">
+        <h2>Job Description</h2>
+        <p><strong>Role:</strong> {{job_ad.title}}</p>
+        <p><strong>Employment Type:</strong> {{job_ad.employment_type}}</p>
+        <p><strong>Experience :</strong> {{ job_ad.experience_required }} years</p>       
+        <p><strong>Education:</strong> {{ education_required }}</p>
+        <p><strong>Skills Required:</strong> 
+                {% for skill in job_ad.skills_required.all %}
+                    {{ skill }},
+                {% endfor %}
+            </p>
+        <p><strong>Salary:</strong> {{ job_ad.salary }}LPA</p>
+        <p><strong>Posted At:</strong> {{ job_ad.posted_at }}</p>
+        
+    
+{% endblock %}

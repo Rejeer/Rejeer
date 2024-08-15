@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<style>
+    .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax values if needed */
+    gap: 1rem; /* Space between cards */
+}
+h1{
+    text-align: center;
+    color: grey;
+}
+.card {
+    border: 1px solid #ddd; /* Optional: Add a border to your card */
+    border-radius: 8px; /* Optional: Rounded corners */
+    overflow: hidden; /* Optional: Hide overflow */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow */
+    display: flex;
+    flex-direction: column;
+    background: #fff; /* Optional: Card background color */
+}
+
+.card-body {
+    padding: 1rem; /* Adjust padding as needed */
+}
+
+.card-link {
+    text-decoration: none;
+    color: #007bff; /* Adjust link color as needed */
+}
+
+.card-link:hover {
+    text-decoration: underline; /* Add hover effect */
+}
+
+</style>
+<h1>Welcome, {{ company.name }}</h1>
+{% if request.user.has_company %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'create_job_post' %}">Create Job Ads</a>
+</li>
+{% else %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'company_profile_creation' %}">Create Company</a>
+</li>
+{% endif %}
+
+<h2>Welcome Recruiter!</h2>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'company_profile_view' %}">View Profile</a>
+</li>
+
+<ul>
+    {% for job in job_posts %}
+        <li>
+            <strong>{{ job.title }}</strong>
+            <a href="{% url 'company_notifications' job.id %}">View Notifications</a>
+            <!-- Only link to notifications for this company's jobs -->
+        </li>
+    {% endfor %}
+    </ul>
+
+<div class="card-container">
+    {% if job_posts %}
+        {% for job in job_posts %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ job.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ job.company.name }}</h6> <!-- Displaying company name -->
+                <p class="card-text">{{ job.location }}</p>
+                <h6 class="card-subtitle mb-2 text-muted">{{ job.posted_at }}</h6> <!-- Formatted posted_at -->
+                <a href="#" class="card-link">Edit</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No job posts available.</p>
+    {% endif %}
+</div>
+
+
+
+{% endblock  %}

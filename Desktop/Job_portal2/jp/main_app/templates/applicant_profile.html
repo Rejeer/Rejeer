@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<style>
+    .profile-container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-container h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .profile-container p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .profile-container strong {
+        color: #222;
+    }
+
+    .resume-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+</style>
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'applicant_dashboard' %}">Back</a>
+</li>
+
+{% if applicant %}
+    <div class="profile-container">
+        <h1>Your Profile</h1>
+        <p><strong>First Name:</strong> {{ applicant.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ applicant.last_name }}</p>
+        <p><strong>Title:</strong> {{ applicant.title }}</p>
+        <p><strong>Resume:</strong> <img src="{{ applicant.resume.url }}" alt="Resume" class="resume-img"></p>
+        <p><strong>Education:</strong> {{ applicant.education }}</p>
+        <p><strong>Skills:</strong> {{ applicant.skills }}</p>
+        <p><strong>Experience:</strong> {{ applicant.experience }}</p>
+    </div>
+{% else %}
+    <p>No profile created yet.</p>
+{% endif %}
+
+
+{% endblock content %}
