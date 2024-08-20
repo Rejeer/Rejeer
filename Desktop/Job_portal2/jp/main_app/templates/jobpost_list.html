@@ -1,6 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax values as needed */
+            gap: 1rem; /* Space between cards */
+        }
+        
+        .card {
+            /* Optionally, you can set a max-width to ensure cards don't stretch too much */
+            max-width: 100%;
+        }
+        .form-select {
+                width: 50%;
+                max-width: 300px;  /* Adjust the width as per your design */
+                padding: 10px;
+                font-size: 16px;
+        }
+        input{
+            color:black;
+        }
+        .form-label{
+            color: darkgrey;
+            float: left;
+        }
+        .form-control{
+            color: lightgrey;
+            width: 300px;
+           float: left; ;
+           padding-left: 10px;
+           margin-left: 300px;
+        
+        }
+        h2{
+            text-align: center;
+            color: grey;
+
+        }
+        p{
+            text-align: center;
+            color: grey;
+        }
+</style>
 <p>successfully add your job </p>
+<div class="card-container">
 {% if job_posts %}
     {% for job in job_posts %}
     <div class="card" style="width: 18rem;">
@@ -8,12 +51,13 @@
             <h5 class="card-title">{{ job.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ job.company }}</h6>
             <p class="card-text">{{ job.location }}</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <a href="#" class="card-link btn-btn-primary">Delete</a>
+            
         </div>
     </div>
     {% endfor %}
 {% else %}
     <p>No job posts available.</p>
 {% endif %}
+</div>
 {% endblock content %}

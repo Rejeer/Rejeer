@@ -31,12 +31,26 @@
 .bell-icon i {
     display: inline-block;
 }
+.navbar-brand{
+  padding: 1px;
+
+}
+.navbar-expand-lg{
+  color: skyblue;
+}
+.nav-link{
+  color: black;
+  
+}
     </style>
 </head>
 
    
-    <nav  class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'company_dashboard' %}">Job's Today</a>
+<nav class="navbar navbar-expand-lg" ">
+  <a class="navbar-brand" href="{% url 'company_dashboard' %}">
+    <img src="https://media.licdn.com/dms/image/C560BAQHASoBMwYN6Mg/company-logo_200_200/0/1631322099515?e=2147483647&v=beta&t=f-gvW0AHswrff45u0VvFij-qjLPGCIyJKD6G7TRmMsU" alt="Job's Today Logo" width="110" height="auto">
+  </a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -59,7 +73,7 @@
           </ul>
           
         </div>
-      </nav>
+      </nav><hr>
 
 {% if user.role == 2 %}
     <!-- In some_template.html -->

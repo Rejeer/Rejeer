@@ -95,14 +95,6 @@
       <div class="actions">
         <button>Send me jobs like this</button>
         <button>Save</button>
-        {% if has_applied %}
-        <p>You have already applied for this job.</p>
-    {% else %}
-        <form method="post" action="{% url 'apply_for_job' job_ad.id %}">
-            {% csrf_token %}
-            <button type="submit">Apply</button>
-      </form>
-      {% endif %}
       </div>
     </div>
     <div class="job-body">
@@ -129,9 +121,17 @@
                 {% for skill in job_ad.skills_required.all %}
                     {{ skill }},
                 {% endfor %}
-            </p>
-        <p><strong>Salary:</strong> {{ job_ad.salary }}LPA</p>
-        <p><strong>Posted At:</strong> {{ job_ad.posted_at }}</p>
+            </p><br>
+            <hr>
+       
+           <!-- apply_job.html -->
+           <form method="post"  action="/apply/1/" enctype="multipart/form-data"> 
+          {% csrf_token %}
+            <input type="file" name="resume" required>
+            <textarea name="cover_letter"></textarea>
+            <button class='btn-primary' type="submit">Apply</button>
+        </form>
         
+
     
 {% endblock %}

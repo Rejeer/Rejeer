@@ -1,3 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+<h1>Application Details</h1>
+
+<a href="{% url 'application_detail' application.id %}">View Application Details</a>
+
+
 {% endblock content %}

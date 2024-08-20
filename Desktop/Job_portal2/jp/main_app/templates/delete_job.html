@@ -1,0 +1,7 @@
+<h2>Are you sure you want to delete the job post "{{ job_post.title }}"?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'company_dashboard' %}">No, go back</a>
+</form>

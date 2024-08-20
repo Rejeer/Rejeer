@@ -1,0 +1,22 @@
+<!-- company_application_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Applications for this Company</h2>
+<ul>
+    {% for application in applications %}
+        <li>
+            Application ID: {{ application.id }} <br>
+            Job Post: {{ application.job_post.title }} <br>
+            Applicant: {{ application.applicant.first_name }} {{ application.applicant.last_name }} <br> <!-- Applicant's full name -->
+            Title: {{ application.applicant.title }} <br> <!-- Applicant's title -->
+            Education: {{ application.applicant.education.degree }} from {{ application.applicant.education.institution }} <br> <!-- Education details (assuming degree and institution fields exist in Education model) -->
+            Skills: {{ application.applicant.skills }} <br>
+            Experience: {{ application.applicant.experience }} <br>
+            Status: {{ application.status }} 
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

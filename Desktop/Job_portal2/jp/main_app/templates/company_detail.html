@@ -1,0 +1,106 @@
+{% extends "base_of_admin.html" %}
+{%block content %}
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+   
+    margin-top: 40px;
+    height: 120vh;
+    margin: 3;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px 0;
+    margin-top: 30px;
+    font-size: 18px;
+    text-align: left;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.styled-table thead {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-top: 30px;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    border: #8bebee;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+    margin-top: 30px;
+}
+
+.styled-table tr:hover {
+    background-color: #8bebee;
+    margin-top: 30px;
+}
+
+.styled-table th {
+    font-weight: bold;
+}
+
+.styled-table td {
+    text-align: center;
+    margin-top: 30px;
+    
+}
+th{
+    border-end-end-radius: 10px;
+    margin-top: 30px;
+}
+
+</style>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+<a class=" btn-sm" href="{% url 'admin_dashboard' %}">Back</a><br>
+
+<table border=solid>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Company Name</th>
+            <th>Established Year</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if company_obj %}
+            {% for company in company_obj %}
+                <tr>
+                    <td>{{ company.id }}</td><hr>
+                    <td>{{ company.name }}</td>
+                    <td>{{ company.est_year }}</td>
+                    <td>{{ company.city }}</td>
+                    <td>{{ company.state }}</td>
+                    <td>{{ company.created_at }}</td>
+                    <td>{{ company.updated_at }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="">No companies found</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+</body>
+</html>
+{% endblock %}

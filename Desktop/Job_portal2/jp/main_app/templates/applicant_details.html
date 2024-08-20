@@ -1,0 +1,125 @@
+{% extends "base_of_admin.html" %}
+{%block content %}
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+   
+    margin-top: 40px;
+    height: 120vh;
+    margin: 3;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    margin-top: 30px;
+    font-size: 18px;
+    text-align: left;
+    border: 1px solid #ddd;
+    background-color: #0f0d0d;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.styled-table thead {
+    background-color: #4CAF50;
+    color: #fff;
+    margin-top: 30px;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    border: #8bebee;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+    margin-top: 30px;
+}
+
+.styled-table tr:hover {
+    background-color: #8bebee;
+    margin-top: 30px;
+}
+
+.styled-table th {
+    font-weight: bold;
+}
+
+.styled-table td {
+    text-align: center;
+    margin-top: 30px;
+    
+}
+th{
+    border-end-end-radius: 10px;
+    margin-top: 30px;
+}
+
+</style>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+<a class="btn-btn-primary" href="{% url 'admin_dashboard' %}">Back</a><br><br>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Title</th>
+                <th>Resume</th>
+                <th>Education</th>
+                <th>Skills</th>
+                <th>Experience</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if applicant_obj %}
+                {% for applicant in applicant_obj %}
+                    <tr>
+                        <td>{{ applicant.id }}</td>
+                        <td>{{ applicant.first_name }}</td>
+                        <td>{{ applicant.last_name }}</td>
+                        <td>{{ applicant.title }}</td>
+                        <td><a href="{{ applicant.resume.url }}">View Resume</a></td>
+                        <td>{{ applicant.education }}</td>
+                        <td>{{ applicant.skills }}</td>
+                        <td>{{ applicant.experience }}</td>
+                        <td>{{ applicant.user.username }}</td>
+                        <td>{{ applicant.get_role_display }}</td>
+                        <td>{{ applicant.user.is_active|yesno:"Active,Deactivated" }}</td>
+                        <td>
+                            <a href="{% url 'toggle_applicant_status' applicant.user.id %}" class="btn btn-warning">
+                                {% if applicant.user.is_active %}
+                                    Deactivate
+                                {% else %}
+                                    Activate
+                                {% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="12">No applicants found</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}

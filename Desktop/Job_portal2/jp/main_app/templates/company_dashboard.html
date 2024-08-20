@@ -51,16 +51,26 @@ h1{
 <li class="nav-item">
     <a class="nav-link" href="{% url 'company_profile_view' %}">View Profile</a>
 </li>
+<!-- company_dashboard.html -->
 
-<ul>
-    {% for job in job_posts %}
+{% for application in applications %}
+    {% if application.job_post.id == job_post.id %}
         <li>
-            <strong>{{ job.title }}</strong>
-            <a href="{% url 'company_notifications' job.id %}">View Notifications</a>
-            <!-- Only link to notifications for this company's jobs -->
+            {% if application.applicant.id %}
+                <a href="{% url 'view_applicant_detail' application.applicant.id %}">
+                    {{ application.applicant.first_name }} {{ application.applicant.last_name }}
+                </a>
+            {% else %}
+                No ID available
+            {% endif %}
+            - Status: {{ application.status }}
         </li>
-    {% endfor %}
-    </ul>
+    {% endif %}
+{% endfor %}
+
+
+<a href="{% url 'applicant_notifications' %}">View Notifications</a>
+
 
 <div class="card-container">
     {% if job_posts %}
@@ -71,8 +81,10 @@ h1{
                 <h6 class="card-subtitle mb-2 text-muted">{{ job.company.name }}</h6> <!-- Displaying company name -->
                 <p class="card-text">{{ job.location }}</p>
                 <h6 class="card-subtitle mb-2 text-muted">{{ job.posted_at }}</h6> <!-- Formatted posted_at -->
-                <a href="#" class="card-link">Edit</a>
-                <a href="#" class="card-link">Another link</a>
+                {% if job_post.id %}
+                <a href="{% url 'jobs:edit_job_post' job_post.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'delete_job_post' job_post.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
             </div>
         </div>
         {% endfor %}

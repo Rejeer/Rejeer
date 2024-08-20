@@ -122,7 +122,7 @@ class Applicant(models.Model):
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=20, null=True)
     title = models.CharField(max_length=20, null=True)
-    resume = models.ImageField(upload_to='resumes/')
+    resume = models.FileField(upload_to='resumes/')
     education = models.ForeignKey(Education, on_delete=models.SET_NULL, null=True)
     skills = models.TextField()
     experience = models.TextField()
@@ -146,12 +146,15 @@ class Application(models.Model):
     )
     job = models.ForeignKey(JobAds, on_delete=models.CASCADE)
     seeker = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    resume = models.TextField(blank=True)
-    
+    resume = models.FileField(upload_to='resumes/')
+    cover_letter = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=APPLICATION_STATUS_CHOICES, default='applied')
     applied_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self) -> str:
+        return f" {self.seeker}: {self.job}"
     
-    
+
+
 @receiver(post_save, sender=Application)
 def send_status_update_email(sender, instance, **kwargs):
     if kwargs.get('created', False):

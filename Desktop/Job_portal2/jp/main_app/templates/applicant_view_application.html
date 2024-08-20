@@ -1,48 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
 <style>
-    p{
-        text-align: center;
-        text-decoration: dotted;
-        color: red;
-        background-color: black;
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f5ff; /* Light blue background */
     }
-    h1{
-        text-align: center;
-        color: darkgray;
-    }
-    h3{
-        margin-top: 30px;
-        text-align: center;
-       
-    }
-    h4{
-        margin-top: 20px;
-        text-align: center;
-        
-    }
-    h6{
-        margin-top: 60px;
-        text-align: center;
-    }
-    </style>
-    
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'applicant_update_application_status' job.id %}">Back</a>
-    </li>
-    <h2>Apply for {{ job.title }}</h2>
 
-    {% if applied %}
-        <p>Your application for {{ job.title }} has been submitted successfully.</p>
-        <a href="{% url 'application_detail' application_id=applied.id %}">View Application</a>
-    {% else %}
-        {% if message %}
-            <p>{{ message }}</p>
-        {% else %}
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit">Apply Now</button>
-            </form>
-        {% endif %}
-    {% endif %}
-{% endblock content %}
+    .application-details {
+        border: 1px solid #c0c0ff; /* Lighter blue border */
+        padding: 20px;
+        background-color: #fff; /* White background for contrast */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .application-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #c0c0ff; /* Light blue border */
+        padding-bottom: 15px;
+    }
+
+    .company-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .company-details {
+        margin-left: 10px;
+        color: #333; /* Darker text for better contrast */
+    }
+
+    .application-body {
+        margin-top: 15px;
+    }
+
+    .application-body h3 {
+        color: #007bff; /* Blue heading color */
+    }
+
+    .application-body p {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="application-details">
+    <div class="application-header">
+        <h2>Application Details for {{ application.job.title }}</h2>
+        <div class="company-info">
+            <div class="company-details">
+                <h3>{{ application.job.company.name }}</h3>
+                <p>{{ application.job.company.city }}, {{ application.job.company.state }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="application-body">
+        <h3>Job Information</h3>
+        <p><strong>Job Title:</strong> {{ application.job.title }}</p>
+        <p><strong>Location:</strong> {{ application.job.location }}</p>
+        <p><strong>Employment Type:</strong> {{ application.job.employment_type }}</p>
+        <p><strong>Experience Required:</strong> {{ application.job.experience_required }} years</p>
+        <p><strong>Education Required:</strong> {{ application.job.education_required }}</p>
+        <p><strong>Salary:</strong> {{ application.job.salary }} LPA</p>
+
+        <h3>Applicant Information</h3>
+        <p><strong>Applicant Name:</strong> {{ application.seeker.username }}</p>
+        <p><strong>Resume:</strong> <a href="{{ application.resume.url }}" target="_blank">View Resume</a></p>
+        <p><strong>Cover Letter:</strong> {{ application.cover_letter }}</p>
+        <p><strong>Applied At:</strong> {{ application.applied_at }}</p>
+        <div class="application-actions">
+            <a href="{% url 'edit_application' application.id %}" class="btn">Edit Application</a>
+            <a href="{% url 'delete_application' application.id %}" class="btn" onclick="return confirm('Are you sure you want to delete this application?');">Delete Application</a>
+            <a href="{% url 'view_job' application.job.id %}" class="btn">View Job Details</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

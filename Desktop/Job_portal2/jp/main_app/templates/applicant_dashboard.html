@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <title>Applicant Dashboard</title>
+
     <style>
         .card-container {
             display: grid;
@@ -12,11 +13,70 @@
             /* Optionally, you can set a max-width to ensure cards don't stretch too much */
             max-width: 100%;
         }
+        .form-select {
+                width: 50%;
+                max-width: 300px;  /* Adjust the width as per your design */
+                padding: 10px;
+                font-size: 16px;
+        }
+        input{
+            color:black;
+        }
+        .form-label{
+            color: darkgrey;
+            float: left;
+        }
+        .form-control{
+            color: lightgrey;
+            width: 300px;
+           float: left; ;
+           padding-left: 10px;
+           margin-left: 300px;
+        
+        }
+        h2{
+            text-align: center;
+            color: grey;
+
+        }
+        p{
+            text-align: center;
+            color: grey;
+        }
+       option{
+        color: darkslategray;
+        width : 200px;
+       }
+       .btn{
+        float: right;
+        margin-right: 310px;
+        margin-top: -60px;
+       }
         
     </style>        
-    <h2>Welcome Applicant!</h2>
+    <h2>Welcome {{applicant.location}}</h2>
     <p>This is the applicant dashboard.</p>
-
+    <form method="GET" action="{% url 'applicant_dashboard' %}">
+        <div class="mb-3">
+            
+            <input type="text" name="title" id="title" class="form-control" placeholder="Enter job title" value="{{ search_term }}">
+      
+        
+        <div class="mb-3">
+            
+            <select name="location" id="location" class="form-select">
+                <option value="">All Locations</option>
+                {% for loc in locations %}
+                    <option value="{{ loc.location }}" 
+                        {% if loc.location == selected_location %}selected{% endif %}>
+                        {{ loc.location }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+        <button type="submit" class="btn btn-primary">Search Jobs</button>
+    </form><br>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <ul class="navbar-nav ms-auto">
@@ -39,6 +99,7 @@
         </div>
     </nav>
     
+    <a href="{% url 'applicant_notifications' %}">View Notifications</a>
 
     <div class="card-container">
         {% if job_posts %}
@@ -52,6 +113,7 @@
                     <p class="card-text">Posted at: {{ job.posted_at }}</p>
                     <a href="{% url 'applicant_update_application_status' job.id %}" class="card-link">Apply</a>
                 </div>
+                
             </div>
             {% endfor %}
         {% else %}

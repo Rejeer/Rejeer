@@ -1,0 +1,8 @@
+<h1>Application Details</h1>
+<p><strong>Job Title:</strong> {{ application.job.title }}</p>
+<p><strong>Applicant Name:</strong> {{ application.seeker.username }}</p>
+<p><strong>Applied on:</strong> {{ application.applied_at }}</p>
+
+<h2>Company Information</h2>
+<p><strong>Company Name:</strong> {{ application.job.company.name }}</p>
+<p><strong>Company Email:</strong> {{ application.job.company.user.email }}</p>
